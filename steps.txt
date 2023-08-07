@@ -1,0 +1,5 @@
+1. use readymade templates/ internet
+2. create routes for different pages
+
+
+npm install ejs --save

@@ -5,11 +5,16 @@ const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const app = express()
 const route = require('./routes')
+const fileUpload = require('express-fileupload')
 
 mongoose.connect('mongodb://localhost:27017/ecommerce')
 .then(() => {
     console.log('DB connected!!')
 })
+
+//middleware for file upload
+app.use(fileUpload())
+
 
 //middlewares for session management
 app.use(cookieParser())

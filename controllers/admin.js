@@ -1,4 +1,6 @@
 const products = require("../models/products")
+const userModel = require('../models/models')
+const bcrypt = require('bcrypt')
 
 // this fun will render the page
 const adminLoginPage = (req, res) => {
@@ -31,14 +33,22 @@ const adminLoginFun = async (req, res)=>{
 }
 
 
-const adding_product = async (req, res) => {
-    await products.create({
+const adding_product = (req, res) => {
+    const image = req.files.image
+
+    //__dirname means current directory
+    // ./ means root directory
+    // this line will save image in folder
+    image.mv('./' + 'static/products/' + image.name)
+
+    products.create({
         p_name : req.body.p_name,
         p_des : req.body.p_des,
         price : req.body.price,
-        image : req//path_to_the_saved_imagea
+        image : 'products/' + image.name //path_to_the_saved_imagea
     })
+    return res.render('add_products', {msg : "Product Added Successfully!!"})
 
 }
-
+// npm install express-fileupload --save
 module.exports = {adminLoginPage, adminLoginFun, adding_product}

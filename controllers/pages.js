@@ -1,16 +1,19 @@
 const userModel = require("../models/models")
+const products = require("../models/products")
 
 
 // it will render HOME page
 const home = async (req, res) => {
+    const allPros = await products.find({})
+
     if(req.session.email){
         const userObj = await userModel.findOne({email : req.session.email})
         // index page with fname and logout
-        return res.render('index', {userdata : userObj})
+        return res.render('index', {userdata : userObj, allproducts: allPros})
     }
     else{
         //index page with sign in and register button
-        return res.render('index', {userdata : false})
+        return res.render('index', {userdata : false, allproducts: allPros})
     }
 
 }

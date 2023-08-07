@@ -70,6 +70,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<li>
 						<span class="fa fa-phone" aria-hidden="true"></span> 001 234 5678
 					</li>
+
+					<% if(userdata)	{ %>				
+					<li>
+						<a>
+						<span class="fa fa-unlock-alt" aria-hidden="true"></span><%=userdata.fullname %> </a>
+					</li>
+					<li>
+						<button>
+						<a href="/logout" >Logout</a>
+					 	</button>
+					</li>
+
+				    <% } else { %>
+
+
 					<li>
 						<a href="/login" >
 							<span class="fa fa-unlock-alt" aria-hidden="true"></span> Log In </a>
@@ -78,6 +93,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<a href="/register" >
 							<span class="fa fa-pencil-square-o" aria-hidden="true"></span> Sign Up </a>
 					</li>
+					
+					<% } %>
+
+
 				</ul>
 				<!-- //header lists -->
 				<!-- search -->

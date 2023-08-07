@@ -10,6 +10,7 @@ const register = async (req, res) => {
     }
     
     if(req.body.password == req.body.cpassword){
+
         // finally we can create an entry
         const hashPass = await bcrypt.hash(req.body.password, 10)
 
@@ -25,15 +26,39 @@ const register = async (req, res) => {
         return res.render('register', {msg : "Both passwords do not Match!!!"}) 
     }
 
-    
-    
-    req.body.password
-    req.body.cpassword
-
 
 }
 
 
+const login = async (req, res)=>{
+    //email valiadation
+    const accountExist = await userModel.findOne({email : req.body.email})
+    if(accountExist){
+        //password validation
+        const correct = await bcrypt.compare(req.body.password, accountExist.password)
+        if(correct){
+            //  start the session
+            req.session.email = req.body.email
+            return res.redirect('/')
+        }
+        return res.render('login', {message: "Invalid Password !!" })
+    }
+    else{
+        return res.render('login', {message : "Invalid Email !!"})
+    }
+    //start the session
+
+    //index view
+}
 
 
-module.exports = {register, login}
+const logout = (req, res) => {
+    req.session.email = false // logged out
+    return res.redirect('/')
+}
+
+
+
+module.exports = {register, login, logout}
+
+// npm install express-session cookieparser --save
